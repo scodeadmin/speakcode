@@ -1,6 +1,6 @@
-## Code Shopping List
+# Code Shopping List
 
-# We are looking for code samples in:
+## We are looking for code samples in:
 
 Initially we are collecting pull requests in following areas:
 
