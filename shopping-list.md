@@ -36,7 +36,7 @@ The pull request should have the following information
 
 * Codebase - what language is used
 * Description of what the code does
-* Link to code setup to run from laptop. (ie.https://www.python.org/)
+* Link to code setup to run from laptop. (ie. https://www.python.org/)
 * Tested and functioning code. Working code please.
 * Sample data, or results.
 
