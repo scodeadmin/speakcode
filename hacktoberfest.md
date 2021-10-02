@@ -6,6 +6,5 @@ Contributions are made by submitting a pull request (PR) to any Hacktoberfest-af
 
 To be eligible to participate in Hacktoberfest, you must submit at least four accepted pull requests to any of the participating repositories.
 
-![hacktoberfest](/scode/images/hacktoberfest.png)
 
 Check out our [shopping list](shopping-list.md) to see what we are looking for.
