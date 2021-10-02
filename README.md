@@ -7,11 +7,13 @@ Developers reuse code as part of maintenance, new development, or upgrades. Auto
 
 Using an existing library of code, developers can develop new functions or features within the application. These changes are made for accessibility or a change in standards or needs of the business.
 
-### **Usecases for recycling or reusing Code**
+### **Examples of code that can be recycled or reused**
 
-**Microservices** (A distinctive method of developing software systems that focus on building single-function modules with well-defined interfaces and operations.). **Web APIs** (an application programming interface for either a web server or a web browser) and other web-related components often reuse code.
+**Microservices** (A distinctive method of developing software systems that focus on building single-function modules with well-defined interfaces and operations.). 
 
- **Object-oriented programming (OOP)** organizes software design around data, or objects, rather than functions and logic
+**Web APIs** (an application programming interface for either a web server or a web browser) and other web-related components often reuse code.
+
+**Object-oriented programming (OOP)** organizes software design around data, or objects, rather than functions and logic
 
 **Modular programming**  is a design technique that emphasizes separating the functionality of a program into independent, interchangeable modules, such that each contains everything necessary to execute only one aspect of the desired functionality.
 
