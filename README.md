@@ -39,4 +39,3 @@ Developers can literally spend hours look through blogs, forums, and support for
 
 Check out our [shopping list](shopping-list.md) to see what we are looking for. 
 
-
