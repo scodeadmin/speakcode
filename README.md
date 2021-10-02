@@ -37,4 +37,4 @@ Developers can literally spend hours look through blogs, forums, and support for
 
 **Speak Code** is a way to share your learnings with the community. We are collecting code from the global developer community to share with the world. We are community driven and just getting started so we appreciate your support. 
 
-Check out our shopping list to see what we are looking for. 
+Check out our [shopping list](shopping-list.md) to see what we are looking for. 
