@@ -35,6 +35,6 @@ Using an existing library of code, developers can develop new functions or featu
 
 Developers can literally spend hours look through blogs, forums, and support for useable code.
 
-**Speak Code** We are working on a special project that has been in the works for years. Decided to take a leap from notebook to screen. So we are working with people that speak the language of code.
+**Speak Code** We are working on a special project that has been in the works for years. Decided to take a leap from notebook to screen. So we are working with people that speak the language of code. Our features and project list should be available soon.
 
 
