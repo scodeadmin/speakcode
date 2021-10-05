@@ -1,5 +1,5 @@
 ## **Speak Code**
-SpeakCode - Let's fix some stuff.
+SpeakCode - Let's create something useful.
 
 ## **Do you speak code?**
 
@@ -10,8 +10,27 @@ Using an existing library of code, developers can develop new functions or featu
 ### **Examples of code that can be recycled or reused**
 
 **Microservices** (A distinctive method of developing software systems that focus on building single-function modules with well-defined interfaces and operations.). 
+'''java
+/* HelloWorld.java
+ */
 
+public class HelloWorld
+{
+	public static void main(String[] args) {
+		System.out.println("Hello World!");
+	}
+}
+'''
 **Web APIs** (an application programming interface for either a web server or a web browser) and other web-related components often reuse code.
+'''json
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "https://reqres.in/api/products/3", true);
+xhr.onload = function(){
+    console.log(xhr.responseText);
+};
+xhr.send();
+'''
+				
 
 **Object-oriented programming (OOP)** organizes software design around data, or objects, rather than functions and logic
 
