@@ -1,0 +1,283 @@
+#!/bin/bash
+#
+# openQRM Enterprise developed by OPENQRM AUSTRALIA PTY LTD.
+#
+# All source code and content (c) Copyright 2021, OPENQRM AUSTRALIA PTY LTD unless specifically noted otherwise.
+#
+# This source code is released under the GNU General Public License version 2, unless otherwise agreed with OPENQRM AUSTRALIA PTY LTD.
+# The latest version of this license can be found here: src/doc/LICENSE.txt
+#
+# By using this software, you acknowledge having read this license and agree to be bound thereby.
+#
+#           http://openqrm-enterprise.com
+#
+# Copyright 2021, OPENQRM AUSTRALIA PTY LTD <info@openqrm-enterprise.com>
+#
+
+PACKAGE_TYPE=$1
+VIRT_1=$2
+VIRT_2=$3
+WORKSPACE=`dirname $0`/../
+NOW=`date +%Y%m%d%H%M%S`
+
+#ALL_VIRT_TECHNOLOGIES="citrix libvirt lxc openvz kvm vmware-esx vmware-vsphere xen"
+ALL_VIRT_TECHNOLOGIES="citrix libvirt lxc kvm vmware-esx vmware-vsphere xen"
+COMMUNITY_VIRT_TECHNOLOGIES="kvm"
+
+CURRENTDIR=`pwd`
+
+export LANGUAGE=C
+export LANG=C
+export LC_ALL=C
+
+if [ "$#" == "0" ]; then
+	echo "Usage : $0 <community/smb/large/amazon/enterprise> [virt-technology1] [virt-technology2]"
+	exit 1
+fi
+
+case "$PACKAGE_TYPE" in
+	smb)
+		if [ "$#" != "2" ]; then
+			echo "Usage : $0 <smb> [virt-technology1]"
+			exit 1
+		fi
+		PACKAGE_FILENAME="Enterprise-Edition-Eval-$PACKAGE_TYPE"
+		;;
+	large)
+		if [ "$#" != "3" ]; then
+			echo "Usage : $0 <large> [virt-technology1] [virt-technology2]"
+			exit 1
+		fi
+		PACKAGE_FILENAME="Enterprise-Edition-Eval-$PACKAGE_TYPE"
+		;;
+	amazon)
+		if [ "$#" != "1" ]; then
+			echo "Usage : $0 <amazon>"
+			exit 1
+		fi
+		PACKAGE_FILENAME="Enterprise-Edition-Eval-$PACKAGE_TYPE"
+		;;
+	enterprise)
+		if [ "$#" != "1" ]; then
+			echo "Usage : $0 <enterprise>"
+			exit 1
+		fi
+		PACKAGE_FILENAME="Enterprise-Edition-Eval-$PACKAGE_TYPE"
+		;;
+	community)
+		if [ "$#" != "1" ]; then
+			echo "Usage : $0 <community>"
+			exit 1
+		fi
+		PACKAGE_FILENAME="Community-Edition"
+		;;
+	*)
+			echo "Usage : $0 <community/smb/large/enterprise>"
+			exit 1
+esac
+
+if [ "$VIRT_1" == "" ]; then
+	VIRT_TECH_1="kvm"
+else
+	VIRT_TECH_1="$VIRT_1"
+fi
+if [ "$VIRT_2" == "" ]; then
+	VIRT_TECH_2="vmware"
+else
+	VIRT_TECH_2="$VIRT_2"
+fi
+
+
+if [ ! -e $WORKSPACE/etc/enterprise/$PACKAGE_TYPE.conf ]; then
+	echo "Error : Config file $WORKSPACE/etc/enterprise/$PACKAGE_TYPE.conf does not exit"
+	exit 1
+fi
+
+# source openqrm-server.conf to get the version
+. $WORKSPACE/etc/openqrm-server.conf
+
+VERSION_STRING="openQRM-$OPENQRM_SERVER_VERSION.$OPENQRM_MINOR_RELEASE_VERSION-$PACKAGE_FILENAME"
+echo "Packaging $VERSION_STRING"
+
+TMPBUILD_DIR=`mktemp -d /tmp/openqrm-enterprise.XXXXXXXXXX` || exit 1
+mkdir -p $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING
+
+cp -aR $WORKSPACE/../src $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/
+
+# copy docs
+cp -aR $WORKSPACE/../src/etc/enterprise/txt/openQRM-changelog.txt $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/
+
+# license file for enterprise editions
+# community edition with diffrent scripts
+if [ "$PACKAGE_TYPE" == "community" ]; then
+	cat $WORKSPACE/../src/etc/enterprise/txt/openQRM-releasenotes-community.txt |
+		sed -e "s/@@OPENQRM_VERSION@@/$OPENQRM_SERVER_VERSION.$OPENQRM_MINOR_RELEASE_VERSION/g" |
+		sed -e "s/@@PACKAGE_TYPE@@/$PACKAGE_TYPE/g" > $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/openQRM-releasenotes.txt
+	cp -aR $WORKSPACE/../src/etc/enterprise/txt/install-openqrm-community.sh $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/install-openqrm.sh
+	rm -f $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/doc/openQRM-Enterprise-Server-and-Client-License.txt
+	echo "Downloading GPL 2 license file"
+	if ! wget -O $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/doc/LICENSE.txt http://support.openqrm-enterprise.com/openqrm-build/LICENSE.txt; then
+		echo "!!! ERROR: Failed downloading !!! exiting now"
+		rm -rf $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING
+	fi
+	# community logo
+	rm -f $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/img/logo.png
+	if ! wget -O $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/img/logo.png http://support.openqrm-enterprise.com/openqrm-build/logo-community.png; then
+		echo "!!! ERROR: Failed downloading Community Logo!!! exiting now"
+		rm -rf $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING
+	fi
+else
+	mkdir -p $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/licensekeys
+	cp -aR $WORKSPACE/../src/etc/enterprise/txt/openQRM-Enterprise-License.txt $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/
+	cat $WORKSPACE/../src/etc/enterprise/txt/openQRM-releasenotes.txt |
+		sed -e "s/@@OPENQRM_VERSION@@/$OPENQRM_SERVER_VERSION.$OPENQRM_MINOR_RELEASE_VERSION/g" |
+		sed -e "s/@@PACKAGE_TYPE@@/$PACKAGE_TYPE/g" > $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/openQRM-releasenotes.txt
+	cp -aR $WORKSPACE/../src/etc/enterprise/txt/install-openqrm.sh $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/
+fi
+chmod +x $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/install-openqrm.sh
+
+
+# adjust plugins
+rm -rf $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/*
+cp -aR $WORKSPACE/../src/plugins/Makefile $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/
+
+for PLUGY in `cat $WORKSPACE/etc/enterprise/$PACKAGE_TYPE.conf`; do
+	if [ -d $WORKSPACE/../src/plugins/$PLUGY ]; then
+		cp -aR $WORKSPACE/../src/plugins/$PLUGY $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/
+	fi
+done
+
+# add virt
+case "$PACKAGE_TYPE" in
+	smb)
+		echo "- adding virtualization $VIRT_TECH_1"
+		cp -aR $WORKSPACE/../src/plugins/$VIRT_TECH_1 $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/
+		;;
+	large)
+		echo "- adding virtualization $VIRT_TECH_1"
+		cp -aR $WORKSPACE/../src/plugins/$VIRT_TECH_1 $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/
+		echo "- adding virtualization $VIRT_TECH_2"
+		cp -aR $WORKSPACE/../src/plugins/$VIRT_TECH_2 $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/
+		;;
+	enterprise)
+		for VIRT_TECH_N in `echo $ALL_VIRT_TECHNOLOGIES`; do
+			if [ -d $WORKSPACE/../src/plugins/$VIRT_TECH_N ]; then
+				echo "- adding virtualization $VIRT_TECH_N"
+				cp -aR $WORKSPACE/../src/plugins/$VIRT_TECH_N $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/
+			fi
+		done
+		;;
+	community)
+		for VIRT_TECH_N in `echo $COMMUNITY_VIRT_TECHNOLOGIES`; do
+			if [ -d $WORKSPACE/../src/plugins/$VIRT_TECH_N ]; then
+				echo "- adding virtualization $VIRT_TECH_N"
+				cp -aR $WORKSPACE/../src/plugins/$VIRT_TECH_N $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/
+			fi
+		done
+
+                # enterprise plugins
+                echo "Filling in empty enterprise plugins"
+                for P in `ls $WORKSPACE/../src/plugins/ | grep -v Makefile`; do
+                    if [ ! -d "$TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P" ]; then
+                        echo "Adding empty enterprise plugin $P"
+                        . $WORKSPACE/../src/plugins/$P/etc/openqrm-plugin-$P.conf
+                        mkdir -p $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/etc
+                        > $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/etc/openqrm-plugin-$P.conf
+                        echo "OPENQRM_PLUGIN_DESCRIPTION=\"$OPENQRM_PLUGIN_DESCRIPTION <br>This plugin is only available in the openQRM Enterprise version!<br>Please check <a href='http://www.openqrm-enterprise.com' target='_BLANK'>http://www.openqrm-enterprise.com</a>\"" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/etc/openqrm-plugin-$P.conf
+                        echo "OPENQRM_PLUGIN_TYPE=\"$OPENQRM_PLUGIN_TYPE\"" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/etc/openqrm-plugin-$P.conf
+                        # empty makefille
+                        > $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/Makefile
+                        echo "configure:" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/Makefile
+                        echo "compile:" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/Makefile
+                        echo "install:" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/Makefile
+                        echo -e "\tmkdir -p /usr/share/openqrm/plugins/$P/etc" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/Makefile
+                        echo -e "\tcp etc/openqrm-plugin-$P.conf /usr/share/openqrm/plugins/$P/etc/" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/Makefile
+                        echo "uninstall:" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/Makefile
+                        echo "clean:" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/Makefile
+                        echo "all:" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/$P/Makefile
+                    fi
+                done
+
+                # adapting base template footer
+                sed -i -e "s/openQRM Enterprise Edition/openQRM Community Edition/g" $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/tpl/index.tpl.php
+                sed -i -e "s/openQRM Enterprise Cloud/openQRM Community Cloud/g" $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/cloud/cloud-portal/web/user/tpl/index.default.tpl.php
+
+		# adapt to GPL 2 License
+		cd $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/
+		for FILE in `find -type f | grep -v .svn`; do
+			echo ".. adapting $FILE"
+			sed -i -e "s/GNU General Public License version 2/GNU General Public License version 2/g" $FILE
+			sed -i -e "s#src/doc/LICENSE.txt#src/doc/LICENSE.txt#g" $FILE
+		done
+		echo "- finished GPL License adaption"
+
+		# remove local-server integration script
+		echo "- adapting local-server integration"
+		mkdir -p "$TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/local-server/bin"
+		LOCAL_SERVER="$TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/plugins/local-server/bin/openqrm-local-server"
+
+		echo "clear" > $LOCAL_SERVER
+		echo "echo '#################### Please notice !! #################'" >> $LOCAL_SERVER
+		echo "echo '# The distributed system management openQRM feature   #'" >> $LOCAL_SERVER
+		echo "echo '# local-server is available in the Enterprise Edtion! #'" >> $LOCAL_SERVER
+		echo "echo '#                                                     #'" >> $LOCAL_SERVER
+		echo "echo '# Please check http://www.openqrm-enterprise.com/     #'" >> $LOCAL_SERVER
+		echo "echo '#######################################################'" >> $LOCAL_SERVER
+		echo "echo ''" >> $LOCAL_SERVER
+		echo "- finished adapting local-server integration"
+		chmod +x $LOCAL_SERVER
+		cat $LOCAL_SERVER
+
+		# adapt the info box
+		sed -i -e "s/openQRM Enterprise developed by OPENQRM AUSTRALIA PTY LTD/openQRM Community developed by OPENQRM AUSTRALIA PTY LTD/g" $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.api.class.php
+		grep -B 10000 "<b>openQRM Enterprise Server License</b>" $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.api.class.php | grep -v "<b>openQRM Enterprise Server License</b>" > /tmp/openqrm.api.class.php.1
+		grep -A 10000 "Buy additional licenses</a>" $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.api.class.php | grep -v "Buy additional licenses</a>" > /tmp/openqrm.api.class.php.2
+		cat  /tmp/openqrm.api.class.php.1 > $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.api.class.php
+		cat  /tmp/openqrm.api.class.php.2 >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.api.class.php
+		rm -f /tmp/openqrm.api.class.php.1 /tmp/openqrm.api.class.php.2
+
+		# disable license check in openqrm.class.php
+		sed -i -e "s/\$this->lc()\;//g" $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.class.php
+		grep -B 10000 "function lc" $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.class.php | grep -v "function lc" > /tmp/openqrm.class.php.1
+		cat /tmp/openqrm.class.php.1 > $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.class.php
+		echo "}" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.class.php
+		echo "?>" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.class.php
+		rm -f /tmp/openqrm.class.php.1
+
+		# disable license check in openqrm.content.class.php
+		sed -i -e "s/\$lc = \$this->lcc()\;//g" $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.content.class.php
+		grep -B 10000 "function lcc" $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.content.class.php | grep -v "function lcc" > /tmp/openqrm.content.class.php.1
+		cat /tmp/openqrm.content.class.php.1 > $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.content.class.php
+		echo "}" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.content.class.php
+		echo "?>" >> $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/class/openqrm.content.class.php
+		rm -f /tmp/openqrm.content.class.php.1
+
+		# buy us a coffee in index_top
+		cp -af $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/etc/enterprise/tpl/index_top.tpl.php $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/web/base/tpl/index_top.tpl.php
+		;;
+esac
+
+
+cd $CURRENTDIR
+
+# remove .svn dir
+for svn in `find $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/* -name .svn`; do
+	rm -rf $svn
+done
+# remove package config dir
+rm -rf $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/etc/enterprise
+rm -f $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW/$VERSION_STRING/src/bin/openqrm-package
+
+
+# package
+cd $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW
+tar -C $TMPBUILD_DIR/buildtmp/openqrm-enterprise-$PACKAGE_TYPE-edition-$NOW -czf /tmp/$VERSION_STRING.tgz $VERSION_STRING
+
+
+# clean up
+rm -rf $TMPBUILD_DIR/buildtmp
+rmdir $TMPBUILD_DIR
+
+cd $CURRENTDIR
+echo "Finished creating openQRM Enteprise package $VERSION_STRING at /tmp/$VERSION_STRING.tgz"
+
