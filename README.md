@@ -10,7 +10,7 @@ Using an existing library of code, developers can develop new functions or featu
 ### **Examples of code that can be recycled or reused**
 
 **Microservices** (A distinctive method of developing software systems that focus on building single-function modules with well-defined interfaces and operations.). 
-'''java
+```java
 /* HelloWorld.java
  */
 
@@ -20,22 +20,41 @@ public class HelloWorld
 		System.out.println("Hello World!");
 	}
 }
-'''
+```
 **Web APIs** (an application programming interface for either a web server or a web browser) and other web-related components often reuse code.
-'''json
+```json
 var xhr = new XMLHttpRequest();
 xhr.open("GET", "https://reqres.in/api/products/3", true);
 xhr.onload = function(){
     console.log(xhr.responseText);
 };
 xhr.send();
-'''
+```
 				
 
 **Object-oriented programming (OOP)** organizes software design around data, or objects, rather than functions and logic
 
 **Modular programming**  is a design technique that emphasizes separating the functionality of a program into independent, interchangeable modules, such that each contains everything necessary to execute only one aspect of the desired functionality.
 
+```python
+def greet(name):
+    """
+    This function greets to
+    the person passed in as
+    a parameter
+    """
+    print("Hello, " + name + ". Good morning!")
+```
+
+```python
+def my_func():
+	x = 12
+	print("Value inside function:",x)
+
+x = 24
+my_func()
+print("Value outside function:",x)
+```
 ### **Tips for building your code library**
 
 * Choose a consistent method for storing and editing modified code. Github is an excellent example of retaining code ownership, history, and change.
