@@ -94,4 +94,6 @@ In 2021 developers spent hours looking through blogs and forums for usable code.
 
 SpeakCode is where I write down what I am learning about how developers actually work with code. It is not a product and it is not finished. It gets updated when I have something worth saying.
 
+There is one idea written up here rather than built: [open-source-plan.md](./open-source-plan.md), on what a modern replacement for openQRM might look like. It is on paper, not in progress.
+
 Contributions are open. See [learning-path.md](./learning-path.md) if you want to add your own path into tech.

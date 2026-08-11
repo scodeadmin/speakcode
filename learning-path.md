@@ -42,13 +42,20 @@ Name your PR based on your technical role. Some examples:
 
 * system-admin
 * data-scientist
-* engineer
+* data-engineer
 * sre
+* devops-engineer
+* platform-engineer
 * security-analyst
+* qa-engineer
+* solutions-architect
+* customer-success-architect
+* ml-engineer
+* ai-engineer
 * technical-writer
 * developer-advocate
-* ml-engineer
-* platform-engineer
+* developer-educator
+* product-manager
 * support-engineer
 
 New to pull requests? See [Getting Started with Github](./.github/Getting%20Started%20with%20Github.md) in this repo.
