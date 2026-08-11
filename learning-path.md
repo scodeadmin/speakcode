@@ -4,39 +4,55 @@
 
 ![image info](./images/many-roads.jpg)
 
-Many pathways have led or are leading you to your technical career. Some are traditional or non-traditional, others a mix of both. Some of us learn by doing, others by attending boot camps or another type of training or certification. 
-Whatever your learning path is, it must be continuous because technology is not constant. It is constantly changing.
-Because there are so many factors involved in learning about the technology, we wanted to take the opportunity
-to explore technical roles and how you got there. College, Bootcamp, self-taught, certifications.
+Many pathways have led or are leading you to your technical career. Some are traditional or non-traditional, others a mix of both. Some of us learn by doing, others by attending boot camps or another type of training or certification.
 
-For this contribution **(Pull Request)**, we need the following information.
+Whatever your learning path is, it has to be continuous, because technology is not constant. That was true when I wrote it in 2021 and the last five years made the point for me. Roles that did not exist then are hiring now. Skills that were core are handled by tooling. The people doing well are the ones who kept learning, not the ones who picked correctly the first time.
 
+Because there are so many factors involved, I wanted to take the opportunity to explore technical roles and how people got there. College, bootcamp, self-taught, certifications, career change, all of it.
 
-You can paste this into a blank `markdown` file and being editing. Want a Quick Start? Try [gitpod](https://www.gitpod.io/docs/quickstart).
+## Contributing your path
+
+For this contribution **(Pull Request)**, I need the following information.
+
+Paste this into a blank `markdown` file and start editing.
 
 ```txt
 ### Your current role
 
-### How many year in that role
+### How many years in that role
 
-### List your path to Learning
+### List your path to learning
 * How did you discover your current role?
 * What skills did you need?
 * What did you have to learn?
 * What are you still learning?
+
+### How has your work changed in the last few years?
+Tooling, AI, remote, layoffs, whatever moved for you.
 
 ### Recommendations: books, camps, online courses
 Provide links whenever possible.
 
 ### One or more key things you have discovered while you are learning.
 
-### A Positive message for those that are starting out.
+### A positive message for those that are starting out.
 ```
+
+Name your PR based on your technical role. Some examples:
+
+* system-admin
+* data-scientist
+* engineer
+* sre
+* security-analyst
+* technical-writer
+* developer-advocate
+* ml-engineer
+* platform-engineer
+* support-engineer
+
+New to pull requests? See [Getting Started with Github](./.github/Getting%20Started%20with%20Github.md) in this repo.
 
 ## Last words
 
-Please name your PR based on your technical role (i.e. system-admin, data-scientist, engineer,e tc)
-
-Our goal is to share this wealth of knowledge on our site when it goes LIVE. Our bigger goal is to show that many paths lead to technology. Hopefully, it will inspire others to continue or pursue it. For us means a job WELL DONE.
-
-**NOTE:** during "[Hacktoberfest](https://hacktoberfest.digitalocean.com/) these **Pull Requests** will be counted as *approved*.
+The goal is to collect this knowledge in one place. The bigger goal is to show that many paths lead to technology. If it helps someone keep going or start, that is a job well done.
