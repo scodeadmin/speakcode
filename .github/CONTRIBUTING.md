@@ -1,70 +1,46 @@
-# Getting Started with Github
+# Contributing to SpeakCode
 
-## Setting up your environment
+Thanks for stopping by. This repo collects writing about how developers work with code, and the main thing I am looking for is your learning path into tech.
 
-Setting up your environment is essential to becoming a contributor using Github. Once your environment is set, you can monitor your activity through the [website](https://github.com/) or [mobile app](https://github.com/mobile). To contribute to this website, you need to set up your own  GitHub account.
+You do not need to be senior, credentialed, or certain about anything. The point of the collection is that the paths are different.
 
-## Create a GitHub account and set up your profile
+## What this repo accepts
 
-Need a GitHub account? [Create one](https://github.com/join). Here's an opportunity to get creative with a username that describes your best qualities.  You can use an existing GitHub account to contribute to the website repo or any other repo you are currently using. Don't forget to complete the profile associated with your account. The profile is a way of communicating your interest and what you like to do technically.
+**Learning path submissions.** Your route into a technical role, what you had to learn, what you are still learning. This is the main contribution. Template and prompt are in [learning-path.md](../learning-path.md).
 
->[!NOTE]
-> Profiles are public. Please do not put any personal information in your profile. The entire GitHub community can view what you have written.
+**Corrections.** Broken links, wrong information, code samples that no longer reflect current practice. These are welcome and I would rather hear it than not.
 
-## Setting up the GitHub Stack
+**Discussion.** Open an issue if you disagree with something in the README or want to add to it. You do not have to write a PR to start a conversation.
 
-The recommendations provided are based on the setup used by professionals contributors. 
+## What this repo does not accept
 
-### Install Git 
+* Promotional content, product pitches, or recruiting posts.
+* Contributions that are not yours to give. If you are writing on behalf of an employer, make sure you have the rights.
+* Anything with personal information in it. Everything here is public and stays public.
 
-[Git](https://git-scm.com/downloads) (also known as Git Bash) A command-line-based tool that allows you to submit pull requests, manipulate the branches you created and update your local(forked) copy of the repo. The documentation for [how to use Git](https://git-scm.com/doc) is available online. This tool is available on Linux.
+## How to submit
 
-Free CodeCamp recommends this [list](https://www.freecodecamp.org/news/10-important-git-commands-that-every-developer-should-know/) of Git commands developers should know.
+1. Fork the repo.
+2. Create a branch off `main`.
+3. Add your file. For learning paths, use a new markdown file rather than editing someone else's.
+4. Open a pull request against `main`.
 
-### Visual Code
+Name your PR after your technical role. Examples: `system-admin`, `data-scientist`, `sre`, `technical-writer`, `platform-engineer`. If your role does not fit a tidy label, use the closest one and explain in the PR description.
 
-[Visual code](https://code.visualstudio.com/) is available in Windows, Mac, and Linux. It is a lean editing tool that has multiple uses for development. The installation is simple and documented on the site. There is an extensive marketplace for extensions to enhance your experience using this tool built right into the application! Extensions allow you to work more closely with Github and publish branches without leaving the Visual code.
+New to any of this? See [Getting Started with Github](./Getting%20Started%20with%20Github.md) for setup.
 
-[Walkthrough using Visual Code for your first Pull Request](https://code.visualstudio.com/docs/editor/github).
-It is crucial to **get a local copy of the repo before you start working on the site's content.**
+## Review
 
->[!NOTE]
->New branches and pull requests should only be created in  your copy of the repo. You will not be making commits directly to **main**. However, you should pull **main** into your local repo to ensure you are working with the latest published content. It will reduce the risk of conflicts and unintentionally overwriting published content once your pull request merges.
- 
-In the documentation, user groups, and support channels, you'll see the terms like **master** and **origin**. Our content will reference the actual names within the repo whenever possible.
+I read every PR. It is one person doing this, so it may take a few days. If a week goes by with no response, comment on the PR and it will surface.
 
-### Refresh your local repo often
+I edit lightly. Typos and formatting, yes. Your voice and your opinions stay as you wrote them, including the ones I disagree with.
 
-It is essential to regularly update your local copy of the repo to ensure you have the latest changes. All of the updates approved by the reviewer and merged into the repo will be part of this update. A good routine is to update your local repo before you create or update any open pull requests.
+If something gets declined, you will get a reason, not just a close.
 
-For example, use Git Bash to update your local repo. Change the current working directory to your local project.
+## A note on AI-assisted writing
 
-```bash
-/c/github/bc/website (main)
+Use whatever tools help you write. What I care about is that the experience is actually yours. A learning path that reads as generated has nothing in it worth collecting, because the whole value of this repo is that these are real routes real people took.
 
-$ git checkout main
-$ git pull upstream main
-```
+## Code of conduct
 
-Completing this step before you edit or create content will reduce the possibility of a [merge conflict](https://docs.github.com/en/github/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts#resolving-merge-conflicts).
-
-### Github Desktop
-
-If you are new to Github or would like a quick visual of what's going on in the repo, this is the tool for you. At a glance, you can see the history of changes in the repo you are working in, your latest changes as well as branches you've created. You can use the Github desktop application to get a copy of any repo you are working in. The GitHub website can connect directly to your desktop. The tool also can publish your branch instantly to the repo.
-
-Want to leverage Github Desktop? See [Contributing and collaborating using GitHub Desktop](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop)
-
-### Gitpod
-
-Interesting in trying the online experience? Try https://www.gitpod.io/docs/quickstart
-
-### Tips
-
- The information will be helpful as you being a journey with Github or to refresh your skills. This list is subject to change based on availability. If one of the links no longer works, please advise us, or share a link you've found useful.
-
-- [GitHub Docs](https://docs.github.com/en)
-- [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
-- [Basic syntax of markdown](https://www.markdownguide.org/basic-syntax/)
-- [GitHub markdown syntax PDF](https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf)
-- [Create an issue or Pull Request](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/working-with-your-remote-repository-on-github-or-github-enterprise/creating-an-issue-or-pull-request)
-
+Be decent to people. Disagree with ideas, not with the person holding them. Anything that reads as harassment gets removed and the contributor blocked, no discussion.
