@@ -1,20 +1,20 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
+name: Suggestion or correction
+about: Propose a change to the content in this repo
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**What is this about?**
+Which file or section. A link is fine.
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**What is wrong or missing?**
+Dead link, outdated information, a code sample that no longer reflects current practice, or a topic you think should be covered.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**What would you change it to?**
+If you already have a replacement in mind, put it here. If not, say so and I will work it out.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Anything else**
+Context, sources, or screenshots.
