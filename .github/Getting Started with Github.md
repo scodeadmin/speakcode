@@ -1,70 +1,64 @@
-# Getting Started with Github
+# Getting Started with GitHub
 
-## Setting up your environment
+Setup notes for anyone contributing to this repo for the first time. If you already work in GitHub daily, skip this and read [CONTRIBUTING.md](./CONTRIBUTING.md) instead.
 
-Setting up your environment is essential to becoming a contributor using Github. Once your environment is set, you can monitor your activity through the [website](https://github.com/) or [mobile app](https://github.com/mobile). To contribute to this website, you need to set up your own  GitHub account.
+## Create an account and set up your profile
 
-## Create a GitHub account and set up your profile
+Need a GitHub account? [Create one](https://github.com/join). Pick a username you will be comfortable with in a few years, since it follows your commits around.
 
-Need a GitHub account? [Create one](https://github.com/join). Here's an opportunity to get creative with a username that describes your best qualities.  You can use an existing GitHub account to contribute to the website repo or any other repo you are currently using. Don't forget to complete the profile associated with your account. The profile is a way of communicating your interest and what you like to do technically.
+Fill out the profile. It is how you communicate what you are interested in and what you like to work on. You can monitor your activity through the [website](https://github.com/) or the [mobile app](https://github.com/mobile).
 
->[!NOTE]
-> Profiles are public. Please do not put any personal information in your profile. The entire GitHub community can view what you have written.
+> [!NOTE]
+> Profiles are public. Do not put personal information in your profile or your commits. The entire GitHub community can see it, and commit history is difficult to clean up after the fact.
 
-## Setting up the GitHub Stack
+One setting worth checking before your first commit: **Settings > Emails > Keep my email addresses private**. Without it, whatever email is in your local git config gets published with every commit you make.
 
-The recommendations provided are based on the setup used by professionals contributors. 
+## Setting up your tools
 
-### Install Git 
+### Git
 
-[Git](https://git-scm.com/downloads) (also known as Git Bash) A command-line-based tool that allows you to submit pull requests, manipulate the branches you created and update your local(forked) copy of the repo. The documentation for [how to use Git](https://git-scm.com/doc) is available online. This tool is available on Linux.
+[Git](https://git-scm.com/downloads) is the command-line tool for submitting pull requests, managing branches, and updating your local copy of the repo. Documentation for [how to use Git](https://git-scm.com/doc) is online, and it is good.
 
-Free CodeCamp recommends this [list](https://www.freecodecamp.org/news/10-important-git-commands-that-every-developer-should-know/) of Git commands developers should know.
+freeCodeCamp keeps a [list of Git commands](https://www.freecodecamp.org/news/10-important-git-commands-that-every-developer-should-know/) worth knowing early.
 
-### Visual Code
+### Visual Studio Code
 
-[Visual code](https://code.visualstudio.com/) is available in Windows, Mac, and Linux. It is a lean editing tool that has multiple uses for development. The installation is simple and documented on the site. There is an extensive marketplace for extensions to enhance your experience using this tool built right into the application! Extensions allow you to work more closely with Github and publish branches without leaving the Visual code.
+[VS Code](https://code.visualstudio.com/) runs on Windows, Mac, and Linux. It is a lean editor with an extension marketplace, and it handles GitHub work without leaving the application, including publishing branches.
 
-[Walkthrough using Visual Code for your first Pull Request](https://code.visualstudio.com/docs/editor/github).
-It is crucial to **get a local copy of the repo before you start working on the site's content.**
+There is a [walkthrough for your first pull request](https://code.visualstudio.com/docs/editor/github) in their docs.
 
->[!NOTE]
->New branches and pull requests should only be created in  your copy of the repo. You will not be making commits directly to **main**. However, you should pull **main** into your local repo to ensure you are working with the latest published content. It will reduce the risk of conflicts and unintentionally overwriting published content once your pull request merges.
- 
-In the documentation, user groups, and support channels, you'll see the terms like **master** and **origin**. Our content will reference the actual names within the repo whenever possible.
+Get a local copy of the repo before you start working on anything.
 
-### Refresh your local repo often
+> [!NOTE]
+> Create branches and pull requests in your own fork. You will not commit directly to `main`. Pull `main` into your local copy regularly so you are working against current content. It reduces the risk of conflicts.
 
-It is essential to regularly update your local copy of the repo to ensure you have the latest changes. All of the updates approved by the reviewer and merged into the repo will be part of this update. A good routine is to update your local repo before you create or update any open pull requests.
+### GitHub Desktop
 
-For example, use Git Bash to update your local repo. Change the current working directory to your local project.
+If you are new to GitHub or want a visual read on what is happening in a repo, [GitHub Desktop](https://desktop.github.com/) shows history, your local changes, and your branches at a glance. It connects directly to the website and publishes branches in one click.
+
+See [contributing and collaborating using GitHub Desktop](https://docs.github.com/en/desktop/overview/getting-started-with-github-desktop).
+
+### Working in the browser
+
+You do not have to install anything to make a small edit. GitHub's web editor handles single-file changes, and pressing `.` in any repo opens a full editor in the browser. For a one-file learning path submission, that is often enough.
+
+## Keep your local copy current
+
+Update your local copy before you create or update a pull request. It reduces the chance of a [merge conflict](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts).
 
 ```bash
-/c/github/bc/website (main)
-
 $ git checkout main
 $ git pull upstream main
 ```
 
-Completing this step before you edit or create content will reduce the possibility of a [merge conflict](https://docs.github.com/en/github/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts#resolving-merge-conflicts).
+If `upstream` is not set yet, that is the original repo you forked from. GitHub documents [configuring a remote for a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/configuring-a-remote-repository-for-a-fork).
 
-### Github Desktop
+## Reference
 
-If you are new to Github or would like a quick visual of what's going on in the repo, this is the tool for you. At a glance, you can see the history of changes in the repo you are working in, your latest changes as well as branches you've created. You can use the Github desktop application to get a copy of any repo you are working in. The GitHub website can connect directly to your desktop. The tool also can publish your branch instantly to the repo.
-
-Want to leverage Github Desktop? See [Contributing and collaborating using GitHub Desktop](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop)
-
-### Gitpod
-
-Interesting in trying the online experience? Try https://www.gitpod.io/docs/quickstart
-
-### Tips
-
- The information will be helpful as you being a journey with Github or to refresh your skills. This list is subject to change based on availability. If one of the links no longer works, please advise us, or share a link you've found useful.
+This list changes as tools and docs move. If a link is dead, open an issue or send a replacement.
 
 - [GitHub Docs](https://docs.github.com/en)
-- [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 - [Basic syntax of markdown](https://www.markdownguide.org/basic-syntax/)
-- [GitHub markdown syntax PDF](https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf)
-- [Create an issue or Pull Request](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/working-with-your-remote-repository-on-github-or-github-enterprise/creating-an-issue-or-pull-request)
-
+- [GitHub markdown syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
+- [Creating an issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue)
+- [Creating a pull request from a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork)
